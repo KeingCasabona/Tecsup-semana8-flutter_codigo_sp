@@ -1,88 +1,128 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_codigo_sp/widgets/my_drawer_widget.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  bool isDarkMode = false;
+  int gender = 1;
+  int dificult = 3;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('SharedPreferences App'),
+        title: Text(
+          'SharedPreferences App',
+          style: TextStyle(fontWeight: FontWeight.w600),
+        ),
       ),
-      drawer: Drawer(
+      drawer: MyDrawerWidget(),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            DrawerHeader(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image: NetworkImage(
-                      'https://images.pexels.com/photos/2832382/pexels-photo-2832382.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'),
+            Text(
+              'Configuracion General',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            SizedBox(height: 20),
+            TextField(
+              decoration: InputDecoration(
+                hintText: 'Nombre completo',
+              ),
+            ),
+            SizedBox(height: 20),
+            TextField(
+              decoration: InputDecoration(hintText: 'Direccion actual'),
+            ),
+            // Switch(
+            //   value: false,
+            //   onChanged: (bool value) {},
+            // ),
+            SizedBox(height: 40),
+            SwitchListTile(
+              title: Text('Modo Oscuro'),
+              value: isDarkMode,
+              onChanged: (bool value) {
+                isDarkMode = value;
+                setState(() {
+                  print(isDarkMode);
+                });
+              },
+            ),
+            SizedBox(height: 40),
+
+            RadioListTile(
+              title: Text('Masculino'),
+              value: 1,
+              groupValue: gender,
+              onChanged: (int? value) {
+                setState(() {
+                  gender = value!;
+                  print(value);
+                });
+              },
+            ),
+            RadioListTile(
+              title: Text('Femenino'),
+              value: 2,
+              groupValue: gender,
+              onChanged: (int? value) {
+                setState(() {
+                  gender = value!;
+                  print(value);
+                });
+              },
+            ),
+            SizedBox(height: 40),
+
+            RadioListTile(
+              title: Text('Facil'),
+              value: 3,
+              groupValue: dificult,
+              onChanged: (int? value) {
+                setState(() {
+                  dificult = value!;
+                  print(value);
+                });
+              },
+            ),
+            RadioListTile(
+              title: Text('Dificil'),
+              value: 4,
+              groupValue: dificult,
+              onChanged: (int? value) {
+                setState(() {
+                  dificult = value!;
+                  print(value);
+                });
+              },
+            ),
+            SizedBox(height: 40),
+
+            SizedBox(
+              width: double.infinity,
+              height: 50,
+              child: ElevatedButton.icon(
+                onPressed: () {},
+                icon: Icon(Icons.save),
+                label: Text('Save data'),
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
               ),
-              child: SizedBox(
-                width: double.infinity,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    CircleAvatar(
-                      radius: 28,
-                      backgroundImage: NetworkImage(
-                        'https://images.pexels.com/photos/1848565/pexels-photo-1848565.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-                      ),
-                    ),
-                    Text(
-                      'Fiorella Gonzales Tapia',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Text(
-                      'Administrador',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.people,
-                color: Colors.black.withOpacity(0.6),
-              ),
-              title: Text('Mi perfil'),
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.file_copy,
-                color: Colors.black.withOpacity(0.6),
-              ),
-              title: Text('Portafolio General'),
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.lock,
-                color: Colors.black.withOpacity(0.6),
-              ),
-              title: Text('Cambiar Contraseña'),
-            ),
-            Divider(
-              indent: 20,
-              endIndent: 20,
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.exit_to_app,
-                color: Colors.black.withOpacity(0.6),
-              ),
-              title: Text('Salir'),
-            ),
+            )
           ],
         ),
       ),
