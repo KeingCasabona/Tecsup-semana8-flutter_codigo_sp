@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_codigo_sp/pages/my_profile_page.dart';
 
 class MyDrawerWidget extends StatelessWidget {
   const MyDrawerWidget({super.key});
@@ -48,6 +49,10 @@ class MyDrawerWidget extends StatelessWidget {
             ),
           ),
           ListTile(
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => MyProfilePage()));
+            },
             leading: Icon(
               Icons.people,
               color: Colors.black.withOpacity(0.6),

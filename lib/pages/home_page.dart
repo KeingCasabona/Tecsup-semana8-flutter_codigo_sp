@@ -25,15 +25,13 @@ class _HomePageState extends State<HomePage> {
     _prefs.setBool('darkMode', isDarkMode);
     _prefs.setInt('gender', gender);
     _prefs.setInt('dificult', dificult);
-    print('guardado en Shared Preferens');
   }
 
-  getDataSharedPreferences() async {
-    SharedPreferences _prefs = await SharedPreferences.getInstance();
-    String fullName = _prefs.getString('fullName') ?? '';
-    String address = _prefs.getString('address') ?? '';
-    print(fullName);
-  }
+  // getDataSharedPreferences() async {
+  //   SharedPreferences _prefs = await SharedPreferences.getInstance();
+  //   String fullName = _prefs.getString('fullName') ?? '';
+  //   String address = _prefs.getString('address') ?? '';
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -82,9 +80,7 @@ class _HomePageState extends State<HomePage> {
                 value: isDarkMode,
                 onChanged: (bool value) {
                   isDarkMode = value;
-                  setState(() {
-                    print(isDarkMode);
-                  });
+                  setState(() {});
                 },
               ),
               SizedBox(height: 40),
@@ -96,7 +92,6 @@ class _HomePageState extends State<HomePage> {
                 onChanged: (int? value) {
                   setState(() {
                     gender = value!;
-                    print(value);
                   });
                 },
               ),
@@ -107,7 +102,6 @@ class _HomePageState extends State<HomePage> {
                 onChanged: (int? value) {
                   setState(() {
                     gender = value!;
-                    print(value);
                   });
                 },
               ),
@@ -120,7 +114,6 @@ class _HomePageState extends State<HomePage> {
                 onChanged: (int? value) {
                   setState(() {
                     dificult = value!;
-                    print(value);
                   });
                 },
               ),
@@ -131,7 +124,6 @@ class _HomePageState extends State<HomePage> {
                 onChanged: (int? value) {
                   setState(() {
                     dificult = value!;
-                    print(value);
                   });
                 },
               ),
