@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_codigo_sp/utils/shared_global.dart';
 import 'package:flutter_codigo_sp/widgets/my_drawer_widget.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -10,28 +10,21 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final SharedGlobal _sharedGlobal = SharedGlobal();
+
   bool isDarkMode = false;
   int gender = 1;
   int dificult = 3;
-
   TextEditingController _fullNameController = TextEditingController();
-
   TextEditingController _addressController = TextEditingController();
 
-  saveSharedPreferences() async {
-    SharedPreferences _prefs = await SharedPreferences.getInstance();
-    _prefs.setString('fullName', _fullNameController.text);
-    _prefs.setString('address', _addressController.text);
-    _prefs.setBool('darkMode', isDarkMode);
-    _prefs.setInt('gender', gender);
-    _prefs.setInt('dificult', dificult);
+  saveGlobalPreferences() {
+    _sharedGlobal.fullName = _fullNameController.text;
+    _sharedGlobal.address = _addressController.text;
+    _sharedGlobal.isDarkMode = isDarkMode;
+    _sharedGlobal.gender = gender;
+    _sharedGlobal.dificult = dificult;
   }
-
-  // getDataSharedPreferences() async {
-  //   SharedPreferences _prefs = await SharedPreferences.getInstance();
-  //   String fullName = _prefs.getString('fullName') ?? '';
-  //   String address = _prefs.getString('address') ?? '';
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -134,8 +127,33 @@ class _HomePageState extends State<HomePage> {
                 height: 50,
                 child: ElevatedButton.icon(
                   onPressed: () {
-                    saveSharedPreferences();
-                    //getDataSharedPreferences();
+                    saveGlobalPreferences();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Row(
+                          children: [
+                            Icon(Icons.check, color: Colors.white),
+                            SizedBox(width: 10),
+                            Text(
+                              'Datos guardados correctamente',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ],
+                        ),
+                        backgroundColor: Colors.green,
+                        duration: Duration(seconds: 3),
+                        behavior: SnackBarBehavior.floating,
+                        margin: EdgeInsets.only(
+                            bottom: 20.0, left: 10.0, right: 10.0),
+                        action: SnackBarAction(
+                          label: 'DESHACER',
+                          textColor: Colors.white,
+                          onPressed: () {
+                            // Acción a realizar cuando se presiona el botón
+                          },
+                        ),
+                      ),
+                    );
                   },
                   icon: Icon(Icons.save),
                   label: Text('Save data'),

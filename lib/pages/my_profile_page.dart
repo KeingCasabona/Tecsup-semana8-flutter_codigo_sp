@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_codigo_sp/utils/shared_global.dart';
 
 class MyProfilePage extends StatefulWidget {
   const MyProfilePage({super.key});
@@ -9,26 +9,7 @@ class MyProfilePage extends StatefulWidget {
 }
 
 class _MyProfilePageState extends State<MyProfilePage> {
-  String fullName = '';
-  String address = '';
-  bool isDarkMode = false;
-  int gender = 1;
-  int dificult = 3;
-  @override
-  void initState() {
-    super.initState();
-    getDataShared();
-  }
-
-  getDataShared() async {
-    SharedPreferences _prefs = await SharedPreferences.getInstance();
-    fullName = _prefs.getString('fullName') ?? '';
-    address = _prefs.getString('address') ?? '';
-    isDarkMode = _prefs.getBool('darkMode') ?? false;
-    gender = _prefs.getInt('gender') ?? 1;
-    dificult = _prefs.getInt('dificult') ?? 3;
-    setState(() {});
-  }
+  final SharedGlobal _sharedGlobal = SharedGlobal();
 
   @override
   Widget build(BuildContext context) {
@@ -53,27 +34,28 @@ class _MyProfilePageState extends State<MyProfilePage> {
             ),
             ListTile(
               leading: Icon(Icons.person),
-              title: Text(fullName),
+              title: Text(_sharedGlobal.fullName),
               subtitle: Text('Nombre completo'),
             ),
             ListTile(
               leading: Icon(Icons.location_on),
-              title: Text(address),
+              title: Text(_sharedGlobal.address),
               subtitle: Text('Direccion'),
             ),
             ListTile(
               leading: Icon(Icons.dark_mode),
-              title: Text(isDarkMode ? 'Activado' : 'Desactivado'),
+              title:
+                  Text(_sharedGlobal.isDarkMode ? 'Activado' : 'Desactivado'),
               subtitle: Text('Modo Oscuro'),
             ),
             ListTile(
               leading: Icon(Icons.account_tree),
-              title: Text(gender == 1 ? 'Masculino' : 'Femenino'),
+              title: Text(_sharedGlobal.gender == 1 ? 'Masculino' : 'Femenino'),
               subtitle: Text('Genero'),
             ),
             ListTile(
               leading: Icon(Icons.ac_unit),
-              title: Text(dificult == 3 ? 'Facil' : 'Dificil'),
+              title: Text(_sharedGlobal.dificult == 3 ? 'Facil' : 'Dificil'),
               subtitle: Text('Nivel de dificultad'),
             )
           ],
